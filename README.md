@@ -4,15 +4,15 @@ xson
 Java object serialization and de-serialization processor
 
 
-## 1. ÏîÄ¿½éÉÜ
+## 1. é¡¹ç›®ä»‹ç»
 
-XsonÊÇÒ»¸öJava¶ÔÏóĞòÁĞ»¯ºÍ·´ĞòÁĞ»¯³ÌĞò¡£Ö§³ÖJava¶ÔÏóµ½×Ö½ÚÊı×éµÄĞòÁĞ»¯£¬ºÍ´Ó×Ö½ÚÊı×éµ½Java¶ÔÏóµÄ·´ĞòÁĞ»¯¡£
+Xsonæ˜¯ä¸€ä¸ªJavaå¯¹è±¡åºåˆ—åŒ–å’Œååºåˆ—åŒ–ç¨‹åºã€‚æ”¯æŒJavaå¯¹è±¡åˆ°å­—èŠ‚æ•°ç»„çš„åºåˆ—åŒ–ï¼Œå’Œä»å­—èŠ‚æ•°ç»„åˆ°Javaå¯¹è±¡çš„ååºåˆ—åŒ–ã€‚
 
-## 2. Ö§³ÖµÄ¶ÔÏóÀàĞÍ
+## 2. æ”¯æŒçš„å¯¹è±¡ç±»å‹
 
-* 1.Java POJO¶ÔÏó
-* 2.»ù±¾ÀàĞÍ:byte,short,int,long,float,double,boolean,char
-* 3.°ü×°ÀàĞÍ:Byte,Short,Integer,Long,Float,Double,Boolean,Character
+* 1.Java POJOå¯¹è±¡
+* 2.åŸºæœ¬ç±»å‹:byte,short,int,long,float,double,boolean,char
+* 3.åŒ…è£…ç±»å‹:Byte,Short,Integer,Long,Float,Double,Boolean,Character
 * 4.String
 * 5.Collection
 * 6.Map
@@ -39,31 +39,31 @@ XsonÊÇÒ»¸öJava¶ÔÏóĞòÁĞ»¯ºÍ·´ĞòÁĞ»¯³ÌĞò¡£Ö§³ÖJava¶ÔÏóµ½×Ö½ÚÊı×éµÄĞòÁĞ»¯£¬ºÍ´Ó×Ö½Ú
 * 27.Inet6Address
 * 28.InetSocketAddress
 
-## 3. ÔÚmavenÖĞÈçºÎÅäÖÃxsonÒÀÀµ
+## 3. åœ¨mavenä¸­å¦‚ä½•é…ç½®xsonä¾èµ–
 
-## 4. Ê¹ÓÃÊ¾Àı
+## 4. ä½¿ç”¨ç¤ºä¾‹
 
-1.Ê¹ÓÃxson½øĞĞ¶ÔÏóµ½×Ö½ÚÊı×éµÄĞòÁĞ»¯
+1.ä½¿ç”¨xsonè¿›è¡Œå¯¹è±¡åˆ°å­—èŠ‚æ•°ç»„çš„åºåˆ—åŒ–
 
 	User user = new User();
 	//set....
 	byte[] data = XSON.write(user);
 
-2.Ê¹ÓÃxson½øĞĞ×Ö½ÚÊı×éµ½¶ÔÏóµÄ·´ĞòÁĞ»¯
+2.ä½¿ç”¨xsonè¿›è¡Œå­—èŠ‚æ•°ç»„åˆ°å¯¹è±¡çš„ååºåˆ—åŒ–
 
 	//byte[] data = XSON.write(user);
 	User user = XSON.parse(data);
 
-## 5. ÓÃ»§À©Õ¹
+## 5. ç”¨æˆ·æ‰©å±•
 
-1.ÔÚxsonÖĞÌí¼ÓÓÃ»§×Ô¶¨ÒåµÄPOJOÀàĞÍ£¨ÇëÔÚÊ¹ÓÃĞòÁĞ»¯µÄ·´ĞòÁĞ»¯Ö®Ç°²Ù×÷£©
+1.åœ¨xsonä¸­æ·»åŠ ç”¨æˆ·è‡ªå®šä¹‰çš„POJOç±»å‹ï¼ˆè¯·åœ¨ä½¿ç”¨åºåˆ—åŒ–çš„ååºåˆ—åŒ–ä¹‹å‰æ“ä½œï¼‰
 
 	Map<String, String> prop = new HashMap<String, String>();
 	prop.put("org.xson.testmodel.XUser7", "x7");
 	prop.put("org.xson.testmodel.XUser6", "x6");
 	XsonSupport.addCustomAgreementType(prop);
 
-2.ÓÃ»§×Ô¶¨ÒåSerializer
+2.ç”¨æˆ·è‡ªå®šä¹‰Serializer
 
 	public class CustomerSerializer implements XsonWriter {
 	
@@ -73,7 +73,7 @@ XsonÊÇÒ»¸öJava¶ÔÏóĞòÁĞ»¯ºÍ·´ĞòÁĞ»¯³ÌĞò¡£Ö§³ÖJava¶ÔÏóµ½×Ö½ÚÊı×éµÄĞòÁĞ»¯£¬ºÍ´Ó×Ö½Ú
 		}
 	}
 
-3.ÓÃ»§×Ô¶¨ÒåDeserializer
+3.ç”¨æˆ·è‡ªå®šä¹‰Deserializer
 
 	public class CustomerDeserializer implements XsonReader {
 		@Override
@@ -83,6 +83,6 @@ XsonÊÇÒ»¸öJava¶ÔÏóĞòÁĞ»¯ºÍ·´ĞòÁĞ»¯³ÌĞò¡£Ö§³ÖJava¶ÔÏóµ½×Ö½ÚÊı×éµÄĞòÁĞ»¯£¬ºÍ´Ó×Ö½Ú
 		}
 	}
 
-4.ÔÚxsonÖĞÌí¼ÓÓÃ»§×Ô¶¨ÒåµÄSerializerºÍDeserializer
+4.åœ¨xsonä¸­æ·»åŠ ç”¨æˆ·è‡ªå®šä¹‰çš„Serializerå’ŒDeserializer
 
 	XsonSupport.addCustomSupportType(XUser1.class, new CustomerSerializer(), new CustomerDeserializer());
