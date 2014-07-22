@@ -26,7 +26,7 @@ Xson是一个Java对象序列化和反序列化程序。支持Java对象到字�
 * 14.StringBuilder
 * 15.URI
 * 16.URL
-* 17.UUID	
+* 17.UUID    
 * 18.Locale
 * 19.Currency
 * 20.TimeZone
@@ -40,6 +40,12 @@ Xson是一个Java对象序列化和反序列化程序。支持Java对象到字�
 * 28.InetSocketAddress
 
 ## 3. 在maven中如何配置xson依赖
+
+    <dependency>
+		<groupId>com.github.xsonorg</groupId>
+		<artifactId>xson-core</artifactId>
+		<version>1.0.1</version>
+	</dependency>
 
 ## 4. 使用示例
 
