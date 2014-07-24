@@ -220,10 +220,12 @@ public class ReaderModel {
 		case XsonConst.CONTROL_CREATE_USER_OBJECT:
 			typeIndex = ByteUtils.byteToInt(this.value[this.index + 1]);
 			this.incrementIndex(2);// typeIndex frameType
-			Object returnValue = XsonASMDeserializerFactory.getReader(
+//			Object returnValue = XsonASMDeserializerFactory.getReader(
+//					this.classList.get(typeIndex)).read(this);
+//			this.endObject();
+//			return returnValue;
+			return XsonASMDeserializerFactory.getReader(
 					this.classList.get(typeIndex)).read(this);
-			this.endObject();
-			return returnValue;
 		case XsonConst.CONTROL_CREATE_USER_ARRAY1:
 		case XsonConst.CONTROL_CREATE_USER_ARRAY:
 			return XsonASMDeserializerFactory.getUserObjectArrayReader().read(
