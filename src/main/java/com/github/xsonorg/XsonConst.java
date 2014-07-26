@@ -531,6 +531,27 @@ public class XsonConst {
 		GENERATOR_MAP.put(ByteUtils.byteToInt(BOOLEAN), new BooleanGenerator());
 		GENERATOR_MAP.put(ByteUtils.byteToInt(CHAR), 	new CharGenerator());
 
+		
+		/*Add some commonly used keywords such as
+		Map<String, String> prop = new HashMap<String, String>();
+		prop.put("java.util.ArrayList", 					"0");
+		prop.put("java.util.EnumSet", 						"1");
+		prop.put("java.util.HashSet", 						"2");
+		prop.put("java.util.LinkedHashSet", 				"3");
+		prop.put("java.util.LinkedList", 					"4");
+		prop.put("java.util.Stack", 						"5");
+		prop.put("java.util.TreeSet", 						"6");
+		prop.put("java.util.Vector", 						"7");
+
+		prop.put("java.util.EnumMap", 						"8");
+		prop.put("java.util.HashMap", 						"9");
+		prop.put("java.util.Hashtable", 					"a");
+		prop.put("java.util.IdentityHashMap", 				"b");
+		prop.put("java.util.LinkedHashMap", 				"c");
+		prop.put("java.util.Properties", 					"d");
+		prop.put("java.util.TreeMap", 						"e");
+		prop.put("java.util.concurrent.ConcurrentHashMap", 	"f");
+		XsonSupport.addCustomAgreementType(prop);*/
 	}
 
 }

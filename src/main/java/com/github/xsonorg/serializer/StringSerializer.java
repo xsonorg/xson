@@ -9,7 +9,8 @@ public class StringSerializer extends DefaultSerializer {
 	@Override
 	public void write(Object target, ByteModel model) {
 		String x = (String) target;
-		byte[] buf = x.getBytes(model.getCharset());
+		// byte[] buf = x.getBytes(model.getCharset());
+		byte[] buf = model.encode(x);
 		int length = buf.length;
 		if (256 > length) {// 2^8
 			model.append(new byte[] { XsonConst.STRING1, (byte) length });

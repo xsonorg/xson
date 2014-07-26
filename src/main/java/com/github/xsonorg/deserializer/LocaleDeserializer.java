@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import com.github.xsonorg.ReaderModel;
 import com.github.xsonorg.XsonReader;
+import com.github.xsonorg.codecs.CharsetUtils;
 import com.github.xsonorg.util.ByteUtils;
 
 public class LocaleDeserializer implements XsonReader {
@@ -14,8 +15,12 @@ public class LocaleDeserializer implements XsonReader {
 		model.incrementIndex(2);
 
 		Locale returnValue = null;
-		String str = new String(value, model.getIndex(), length,
-				model.getCharset());
+		// String str = new String(value, model.getIndex(), length,
+		// model.getCharset());
+
+		String str = model.decode(value, model.getIndex(), length,
+				CharsetUtils.ASCII);
+
 		String[] items = str.split("_");
 		int itemsLength = items.length;
 		if (itemsLength == 3) {

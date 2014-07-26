@@ -36,8 +36,11 @@ public class URIDeserializer implements XsonReader {
 					+ frameType + " at index " + (model.getIndex() - 1));
 		}
 
-		URI returnValue = URI.create(new String(value, model.getIndex(),
-				length, model.getCharset()));
+//		URI returnValue = URI.create(new String(value, model.getIndex(),
+//				length, model.getCharset()));
+		
+		URI returnValue = URI.create(model.decode(value, model.getIndex(), length));
+		
 		model.appendObject(returnValue);
 		model.incrementIndex(length);
 		return returnValue;

@@ -11,7 +11,8 @@ public class TestApp {
 	public void test01() {
 		User user1 = new User();
 		user1.setId(18);
-		user1.setName("david");
+		//user1.setName("david中国");
+		user1.setName(new String());
 
 		byte[] data = XSON.write(user1);
 

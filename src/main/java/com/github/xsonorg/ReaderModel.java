@@ -4,10 +4,11 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.xsonorg.codecs.CharsetUtils;
+import com.github.xsonorg.codecs.XsonStringCodecs;
 import com.github.xsonorg.deserializer.XsonDeserializerException;
 import com.github.xsonorg.generator.XsonASMDeserializerFactory;
 import com.github.xsonorg.util.ByteUtils;
-import com.github.xsonorg.util.CharsetUtils;
 import com.github.xsonorg.util.XsonTypeUtils;
 
 /**
@@ -31,15 +32,20 @@ public class ReaderModel {
 	private List<Object> objectList = new ArrayList<Object>();
 
 	ReaderModel(final byte[] value) {
-		this(value, null);
+		this(value, CharsetUtils.UTF8);
 	}
 
-	ReaderModel(final byte[] value, String charsetName) {
+	// ReaderModel(final byte[] value, String charsetName) {
+	// this.value = value;
+	// if (null == charsetName) {
+	// charsetName = "UTF-8";
+	// }
+	// this.charset = CharsetUtils.lookup(charsetName);
+	// }
+
+	ReaderModel(final byte[] value, Charset charset) {
 		this.value = value;
-		if (null == charsetName) {
-			charsetName = "UTF-8";
-		}
-		this.charset = CharsetUtils.lookup(charsetName);
+		this.charset = charset;
 	}
 
 	public void init() {
@@ -94,7 +100,9 @@ public class ReaderModel {
 			while (pos < this.count) {
 				b = this.value[pos++];
 				fullNameLength = ByteUtils.byteToInt(this.value[pos++]);
-				fullName = new String(this.value, pos, fullNameLength);
+				// fullName = new String(this.value, pos, fullNameLength);
+				fullName = decode(this.value, pos, fullNameLength,
+						CharsetUtils.ASCII);
 				if (b == XsonConst.CLASS_DES) {
 					classList.add(XsonTypeUtils.findClass(fullName));
 				} else if (b == XsonConst.CLASS_REF) {
@@ -114,6 +122,14 @@ public class ReaderModel {
 		} catch (Exception e) {
 			throw new XsonDeserializerException(e);
 		}
+	}
+
+	public String decode(byte[] buf, int offset, int length) {
+		return XsonStringCodecs.decode(charset, buf, offset, length);
+	}
+
+	public String decode(byte[] buf, int offset, int length, Charset charset) {
+		return XsonStringCodecs.decode(charset, buf, offset, length);
 	}
 
 	public byte[] getValue() {
@@ -220,10 +236,10 @@ public class ReaderModel {
 		case XsonConst.CONTROL_CREATE_USER_OBJECT:
 			typeIndex = ByteUtils.byteToInt(this.value[this.index + 1]);
 			this.incrementIndex(2);// typeIndex frameType
-//			Object returnValue = XsonASMDeserializerFactory.getReader(
-//					this.classList.get(typeIndex)).read(this);
-//			this.endObject();
-//			return returnValue;
+			// Object returnValue = XsonASMDeserializerFactory.getReader(
+			// this.classList.get(typeIndex)).read(this);
+			// this.endObject();
+			// return returnValue;
 			return XsonASMDeserializerFactory.getReader(
 					this.classList.get(typeIndex)).read(this);
 		case XsonConst.CONTROL_CREATE_USER_ARRAY1:

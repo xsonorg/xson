@@ -6,10 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.github.xsonorg.codecs.CharsetUtils;
+import com.github.xsonorg.codecs.XsonStringCodecs;
 import com.github.xsonorg.generator.XsonASMSerializerFactory;
 import com.github.xsonorg.serializer.XsonSerializerException;
 import com.github.xsonorg.util.ByteUtils;
-import com.github.xsonorg.util.CharsetUtils;
 import com.github.xsonorg.util.ObjectHashMap;
 
 /**
@@ -26,22 +27,28 @@ public class ByteModel {
 
 	private Map<Class<?>, Integer> repeatClassMap = new HashMap<Class<?>, Integer>();
 
-//	private Map<Object, Integer> repeatObjectMap = new HashMap<Object, Integer>();
-	private ObjectHashMap<Object, Integer> repeatObjectMap = new ObjectHashMap<Object, Integer>();
+	// private Map<Object, Integer> repeatObjectMap = new HashMap<Object,
+	// Integer>();
+	private ObjectHashMap<Object, Integer> repeatObjectMap = new ObjectHashMap<Object, Integer>(64);
 
 	private int repeatObjectIndex = 0;
 
 	private int count = 0;
 
 	ByteModel() {
-		this(null);
+		this(CharsetUtils.UTF8);
 	}
 
-	ByteModel(String charsetName) {
-		if (null == charsetName) {
-			charsetName = "UTF-8";
-		}
-		this.charset = CharsetUtils.lookup(charsetName);
+	// ByteModel(String charsetName) {
+	// if (null == charsetName) {
+	// charsetName = "UTF-8";
+	// }
+	// this.charset = CharsetUtils.lookup(charsetName);
+	// dataList = new ArrayList<byte[]>(32);
+	// }
+
+	ByteModel(Charset charset) {
+		this.charset = charset;
 		dataList = new ArrayList<byte[]>(32);
 	}
 
@@ -78,7 +85,7 @@ public class ByteModel {
 		int dataDomainCount = this.count;
 
 		boolean hasClass = writeDependClasses();
-//		boolean hasClass = false;
+		// boolean hasClass = false;
 
 		byte[] value = null;
 		int pos = 0;
@@ -120,12 +127,12 @@ public class ByteModel {
 				value[pos++] = item[j];
 			}
 			// ArrayCopy
-//			System.arraycopy(item, 0, value, pos, length);
-//			pos += length;
+			// System.arraycopy(item, 0, value, pos, length);
+			// pos += length;
 		}
 		return value;
 	}
-	
+
 	private boolean writeDependClasses() {
 		int size = classList.size();
 		if (size > 0) {
@@ -133,12 +140,16 @@ public class ByteModel {
 				Class<?> clazz = classList.get(i);
 				String caKey = XsonSupport.getCustomAgreementKey(clazz);
 				if (null == caKey) {
-					byte[] strBuf = clazz.getName().getBytes(this.charset);
+					// byte[] strBuf = clazz.getName().getBytes(this.charset);
+					// byte[] strBuf = encode(clazz.getName());
+					byte[] strBuf = encode(clazz.getName(), CharsetUtils.ASCII);
 					append(new byte[] { XsonConst.CLASS_DES,
 							(byte) strBuf.length });
 					append(strBuf);
 				} else {
-					byte[] strBuf = caKey.getBytes(this.charset);
+					// byte[] strBuf = caKey.getBytes(this.charset);
+					// byte[] strBuf = encode(caKey);
+					byte[] strBuf = encode(caKey, CharsetUtils.ASCII);
 					append(new byte[] { XsonConst.CLASS_REF,
 							(byte) strBuf.length });
 					append(strBuf);
@@ -148,6 +159,14 @@ public class ByteModel {
 		} else {
 			return false;
 		}
+	}
+
+	public byte[] encode(String val) {
+		return XsonStringCodecs.encode(charset, val);
+	}
+
+	public byte[] encode(String val, Charset charset) {
+		return XsonStringCodecs.encode(charset, val);
 	}
 
 	private int getClassIndex(Class<?> clazz) {

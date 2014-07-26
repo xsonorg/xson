@@ -1,12 +1,14 @@
 package com.github.xsonorg;
 
+import com.github.xsonorg.codecs.CharsetUtils;
+
 /**
  * @author david<xson_org@126.com>
  * @since JDK1.6
  */
 public class XSON {
 
-	public final static String VERSION = "0.0.1";
+	public final static String VERSION = "1.0.1";
 
 	public static byte[] write(Object val) {
 		return write(val, null);
@@ -16,7 +18,13 @@ public class XSON {
 		if (null == val) {
 			return XsonConst.NULL_OBJECT_BYTES;
 		}
-		ByteModel model = new ByteModel(charsetName);
+		// ByteModel model = new ByteModel(charsetName);
+		ByteModel model = null;
+		if (null == charsetName) {
+			model = new ByteModel();
+		} else {
+			model = new ByteModel(CharsetUtils.lookup(charsetName));
+		}
 		model.writeObject(val);
 		return model.getData();
 	}
@@ -62,7 +70,13 @@ public class XSON {
 		if (null == val || val.length == 1) {
 			return null;
 		}
-		ReaderModel model = new ReaderModel(val, charsetName);
+		// ReaderModel model = new ReaderModel(val, charsetName);
+		ReaderModel model = null;
+		if (null == charsetName) {
+			model = new ReaderModel(val);
+		} else {
+			model = new ReaderModel(val, CharsetUtils.lookup(charsetName));
+		}
 		model.init();
 		return (T) model.getObject();
 	}

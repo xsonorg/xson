@@ -1,4 +1,4 @@
-package com.github.xsonorg.util;
+package com.github.xsonorg.codecs;
 
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
@@ -12,6 +12,10 @@ import com.github.xsonorg.XsonException;
  * @since JDK1.6
  */
 public class CharsetUtils {
+
+	public final static Charset UTF8 = Charset.forName("UTF-8");
+
+	public final static Charset ASCII = Charset.forName("US-ASCII");
 
 	private static Map<String, Charset> charsetMap = new HashMap<String, Charset>();
 

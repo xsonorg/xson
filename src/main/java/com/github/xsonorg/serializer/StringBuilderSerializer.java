@@ -19,7 +19,8 @@ public class StringBuilderSerializer extends DefaultSerializer {
 		if (0 == sb.length()) {
 			model.append(new byte[] { XsonConst.STRING_BUILDER, XsonConst.NULL });
 		} else {
-			byte[] buf = x.getBytes(model.getCharset());
+			// byte[] buf = x.getBytes(model.getCharset());
+			byte[] buf = model.encode(x);
 			int length = buf.length;
 			if (256 > length) {// 2^8
 				model.append(new byte[] { XsonConst.STRING_BUILDER,

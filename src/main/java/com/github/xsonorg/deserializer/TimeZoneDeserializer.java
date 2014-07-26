@@ -12,8 +12,9 @@ public class TimeZoneDeserializer implements XsonReader {
 		byte[] value = model.getValue();
 		int length = ByteUtils.byteToInt(value[model.getIndex() + 1]);
 		model.incrementIndex(2);
-		String str = new String(value, model.getIndex(), length,
-				model.getCharset());
+		// String str = new String(value, model.getIndex(), length,
+		// model.getCharset());
+		String str = model.decode(value, model.getIndex(), length);
 		TimeZone returnValue = TimeZone.getTimeZone(str);
 		model.appendObject(returnValue);
 		model.incrementIndex(length);

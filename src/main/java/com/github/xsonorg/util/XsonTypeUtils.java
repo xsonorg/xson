@@ -335,8 +335,8 @@ public class XsonTypeUtils {
 		byte[] classCode = classWriter.toByteArray();
 
 		// logger
-		//writeClass(classCode, className);
-		//System.out.println("createByteCode:" + className);
+		// writeClass(classCode, className);
+		// System.out.println("createByteCode:" + className);
 
 		Class<?> exampleClass = classLoader.defineClassPublic(className,
 				classCode, 0, classCode.length);

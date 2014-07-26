@@ -6,50 +6,49 @@ package com.github.xsonorg.util;
  */
 public class ObjectHashMap<K, V> {
 
-	static final int DEFAULT_INITIAL_CAPACITY = 16;
-
-	static final int MAXIMUM_CAPACITY = 1 << 30;
-
-	static final float DEFAULT_LOAD_FACTOR = 0.75f;
-
+	//static final int DEFAULT_INITIAL_CAPACITY = 16;
+	//static final int MAXIMUM_CAPACITY = 1 << 30;
+	//static final float DEFAULT_LOAD_FACTOR = 0.75f;
+	//final float loadFactor;
+	
 	transient Entry[] table;
 
 	transient int size;
 
 	int threshold;
 
-	final float loadFactor;
+	//transient volatile int modCount;
+	//transient int modCount;
 
-	transient volatile int modCount;
-
-	public ObjectHashMap(int initialCapacity, float loadFactor) {
-		if (initialCapacity < 0)
-			throw new IllegalArgumentException("Illegal initial capacity: "
-					+ initialCapacity);
+/*	public ObjectHashMap(int initialCapacity, float loadFactor) {
+//		if (initialCapacity < 0)
+//			throw new IllegalArgumentException("Illegal initial capacity: "
+//					+ initialCapacity);
 		if (initialCapacity > MAXIMUM_CAPACITY)
 			initialCapacity = MAXIMUM_CAPACITY;
-		if (loadFactor <= 0 || Float.isNaN(loadFactor))
-			throw new IllegalArgumentException("Illegal load factor: "
-					+ loadFactor);
+//		if (loadFactor <= 0 || Float.isNaN(loadFactor))
+//			throw new IllegalArgumentException("Illegal load factor: "
+//					+ loadFactor);
 
 		// Find a power of 2 >= initialCapacity
-		int capacity = 1;
-		while (capacity < initialCapacity)
-			capacity <<= 1;
-
-		this.loadFactor = loadFactor;
-		threshold = (int) (capacity * loadFactor);
-		table = new Entry[capacity];
+//		int capacity = 1;
+//		while (capacity < initialCapacity)
+//			capacity <<= 1;
+		
+//		this.loadFactor = loadFactor;
+//		threshold = (int) (capacity * loadFactor);
+//		table = new Entry[capacity];
 	}
-
-	public ObjectHashMap(int initialCapacity) {
-		this(initialCapacity, DEFAULT_LOAD_FACTOR);
-	}
-
+	
 	public ObjectHashMap() {
 		this.loadFactor = DEFAULT_LOAD_FACTOR;
 		threshold = (int) (DEFAULT_INITIAL_CAPACITY * DEFAULT_LOAD_FACTOR);
 		table = new Entry[DEFAULT_INITIAL_CAPACITY];
+	}*/
+
+	public ObjectHashMap(int initialCapacity) {
+		threshold = initialCapacity;
+		table = new Entry[initialCapacity];
 	}
 
 	static int hash(int h) {
@@ -62,46 +61,75 @@ public class ObjectHashMap<K, V> {
 	}
 
 	public V get(Object key) {
-		// int hash = hash(key.hashCode());
-		int hash = hash(key.getClass().hashCode() + key.hashCode());
+		
+		int hash = hash(key.hashCode());
+		
+//		int hash = 0;
+//		try {
+//			hash = hash(key.hashCode());
+//		} catch (Exception e1) {
+//			hash = System.identityHashCode(key);
+//		}
+		
+		// int hash = hash(key.getClass().hashCode() + key.hashCode());
 		for (Entry<K, V> e = table[indexFor(hash, table.length)]; e != null; e = e.next) {
-			Object k;
-			if (e.hash == hash && ((k = e.key) == key || key.equals(k)))
+//			Object k;
+//			if (e.hash == hash && ((k = e.key) == key || key.equals(k)))
+//				return e.value;
+			Object k = e.key;
+			if(k == key){
 				return e.value;
+			}
+			
+			if(e.hash != hash || k.getClass() != key.getClass()){
+				return null;
+			}
+			
+			if((key instanceof Number || key instanceof String) && key.equals(k)){
+				return e.value;
+			}
 		}
 		return null;
 	}
 
 	public V put(K key, V value) {
-		// int hash = hash(key.hashCode());
-		int hash = hash(key.getClass().hashCode() + key.hashCode());
+		int hash = hash(key.hashCode());
+		
+//		int hash = 0;
+//		try {
+//			hash = hash(key.hashCode());
+//		} catch (Exception e1) {
+//			hash = System.identityHashCode(key);
+//		}
+		
+		// int hash = hash(key.getClass().hashCode() + key.hashCode());
 		int i = indexFor(hash, table.length);
-		for (Entry<K, V> e = table[i]; e != null; e = e.next) {
-			Object k;
-			if (e.hash == hash && ((k = e.key) == key || key.equals(k))) {
-				V oldValue = e.value;
-				e.value = value;
-				return oldValue;
-			}
-		}
-
-		modCount++;
+		//modCount++;
+		//此处放入,K-V.key的Hash可能相同,但key的值一定不同
 		addEntry(hash, key, value, i);
 		return null;
+	}
+	
+	void addEntry(int hash, K key, V value, int bucketIndex) {
+		Entry<K, V> e = table[bucketIndex];
+		//放入头部
+		table[bucketIndex] = new Entry<K, V>(hash, key, value, e);
+		if (size++ >= threshold)
+			resize(2 * table.length);
 	}
 
 	void resize(int newCapacity) {
 		Entry[] oldTable = table;
 		int oldCapacity = oldTable.length;
-		if (oldCapacity == MAXIMUM_CAPACITY) {
-			threshold = Integer.MAX_VALUE;
-			return;
-		}
-
+//		if (oldCapacity == MAXIMUM_CAPACITY) {
+//			threshold = Integer.MAX_VALUE;
+//			return;
+//		}
 		Entry[] newTable = new Entry[newCapacity];
 		transfer(newTable);
 		table = newTable;
-		threshold = (int) (newCapacity * loadFactor);
+		//threshold = (int) (newCapacity * loadFactor);
+		threshold = newCapacity;
 	}
 
 	void transfer(Entry[] newTable) {
@@ -122,15 +150,8 @@ public class ObjectHashMap<K, V> {
 		}
 	}
 
-	void addEntry(int hash, K key, V value, int bucketIndex) {
-		Entry<K, V> e = table[bucketIndex];
-		table[bucketIndex] = new Entry<K, V>(hash, key, value, e);
-		if (size++ >= threshold)
-			resize(2 * table.length);
-	}
-
 	public void clear() {
-		modCount++;
+		//modCount++;
 		Entry[] tab = table;
 		for (int i = 0; i < tab.length; i++)
 			tab[i] = null;
@@ -150,19 +171,16 @@ public class ObjectHashMap<K, V> {
 			hash = h;
 		}
 
-		public final K getKey() {
-			return key;
-		}
-
-		public final V getValue() {
-			return value;
-		}
-
-		public final V setValue(V newValue) {
-			V oldValue = value;
-			value = newValue;
-			return oldValue;
-		}
+//		public final K getKey() {
+//			return key;
+//		}
+//		public final V getValue() {
+//			return value;
+//		}
+//		public final V setValue(V newValue) {
+//			V oldValue = value;
+//			value = newValue;
+//			return oldValue;
+//		}
 	}
-
 }

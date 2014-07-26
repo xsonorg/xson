@@ -30,14 +30,21 @@ public class StringBuilderDeserializer implements XsonReader {
 			model.incrementIndex(4);
 			break;
 		case XsonConst.NULL:
-			return new StringBuilder(0);
+			// return new StringBuilder(0);
+			StringBuilder returnValue = new StringBuilder(0);
+			model.appendObject(returnValue);
+			return returnValue;
 		default:// 4byte
 			throw new XsonDeserializerException(
 					"Not supported StringBuilder type " + frameType
 							+ " at index " + (model.getIndex() - 1));
 		}
-		StringBuilder returnValue = new StringBuilder(new String(value,
-				model.getIndex(), length, model.getCharset()));
+		// StringBuilder returnValue = new StringBuilder(new String(value,
+		// model.getIndex(), length, model.getCharset()));
+
+		StringBuilder returnValue = new StringBuilder(model.decode(value,
+				model.getIndex(), length));
+
 		model.appendObject(returnValue);
 		model.incrementIndex(length);
 		return returnValue;

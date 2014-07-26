@@ -29,10 +29,12 @@ public class StringDeserializer implements XsonReader {
 			length = ByteUtils.byteToInt(value, model.getIndex(), 4);
 			model.incrementIndex(4);
 		}
-		String returnValue = new String(value, model.getIndex(), length,
-				model.getCharset());
+		// String returnValue = new String(value, model.getIndex(), length,
+		// model.getCharset());
+		String returnValue = model.decode(value, model.getIndex(), length);
 		model.appendObject(returnValue);
 		model.incrementIndex(length);
 		return returnValue;
 	}
+
 }

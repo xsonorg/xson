@@ -30,14 +30,18 @@ public class StringBufferDeserializer implements XsonReader {
 			model.incrementIndex(4);
 			break;
 		case XsonConst.NULL:
-			return new StringBuffer(0);
+			StringBuffer returnValue = new StringBuffer(0);
+			model.appendObject(returnValue);
+			return returnValue;
 		default:// 4byte
 			throw new XsonDeserializerException(
 					"Not supported StringBuffer type " + frameType
 							+ " at index " + (model.getIndex() - 1));
 		}
-		StringBuffer returnValue = new StringBuffer(new String(value,
-				model.getIndex(), length, model.getCharset()));
+		// StringBuffer returnValue = new StringBuffer(new String(value,
+		// model.getIndex(), length, model.getCharset()));
+		StringBuffer returnValue = new StringBuffer(model.decode(value,
+				model.getIndex(), length));
 		model.appendObject(returnValue);
 		model.incrementIndex(length);
 		return returnValue;

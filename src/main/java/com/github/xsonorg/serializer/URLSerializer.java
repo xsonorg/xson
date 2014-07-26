@@ -18,7 +18,8 @@ public class URLSerializer extends DefaultSerializer {
 	public void write(Object target, ByteModel model) {
 		URL uri = (URL) target;
 		String x = uri.toString();
-		byte[] buf = x.getBytes(model.getCharset());
+		// byte[] buf = x.getBytes(model.getCharset());
+		byte[] buf = model.encode(x);
 		int length = buf.length;
 		if (256 > length) {// 2^8
 			model.append(new byte[] { XsonConst.URL_WRAP, XsonConst.STRING1,

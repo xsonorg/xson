@@ -39,8 +39,9 @@ public class URLDeserializer implements XsonReader {
 
 		URL returnValue = null;
 		try {
-			returnValue = new URL(new String(value, model.getIndex(), length,
-					model.getCharset()));
+			// returnValue = new URL(new String(value, model.getIndex(), length,
+			// model.getCharset()));
+			returnValue = new URL(model.decode(value, model.getIndex(), length));
 		} catch (MalformedURLException e) {
 			throw new XsonDeserializerException("create url error", e);
 		}
