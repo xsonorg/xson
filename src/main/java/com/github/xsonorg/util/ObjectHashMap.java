@@ -62,14 +62,14 @@ public class ObjectHashMap<K, V> {
 
 	public V get(Object key) {
 		
-		int hash = hash(key.hashCode());
+//		int hash = hash(key.hashCode());
 		
-//		int hash = 0;
-//		try {
-//			hash = hash(key.hashCode());
-//		} catch (Exception e1) {
-//			hash = System.identityHashCode(key);
-//		}
+		int hash = 0;
+		if(key instanceof Number || key instanceof String){
+			hash = hash(key.hashCode());
+		}else{
+			hash = System.identityHashCode(key);
+		}
 		
 		// int hash = hash(key.getClass().hashCode() + key.hashCode());
 		for (Entry<K, V> e = table[indexFor(hash, table.length)]; e != null; e = e.next) {
@@ -81,8 +81,11 @@ public class ObjectHashMap<K, V> {
 				return e.value;
 			}
 			
-			if(e.hash != hash || k.getClass() != key.getClass()){
-				return null;
+//			if(e.hash != hash || k.getClass() != key.getClass()){
+//				return null;
+//			}
+			if(k.getClass() != key.getClass()){
+				continue;
 			}
 			
 			if((key instanceof Number || key instanceof String) && key.equals(k)){
@@ -93,14 +96,14 @@ public class ObjectHashMap<K, V> {
 	}
 
 	public V put(K key, V value) {
-		int hash = hash(key.hashCode());
+		//int hash = hash(key.hashCode());
 		
-//		int hash = 0;
-//		try {
-//			hash = hash(key.hashCode());
-//		} catch (Exception e1) {
-//			hash = System.identityHashCode(key);
-//		}
+		int hash = 0;
+		if(key instanceof Number || key instanceof String){
+			hash = hash(key.hashCode());
+		}else{
+			hash = System.identityHashCode(key);
+		}
 		
 		// int hash = hash(key.getClass().hashCode() + key.hashCode());
 		int i = indexFor(hash, table.length);
