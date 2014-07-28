@@ -39,7 +39,13 @@ Xson是一个Java对象序列化和反序列化程序。支持Java对象到字�
 * 27.Inet6Address
 * 28.InetSocketAddress
 
-## 3. 在maven中如何配置xson依赖
+## 3. 下载和Maven依赖
+
+1.下载地址
+
+* Maven中央仓库 [http://repo1.maven.org/maven2/com/github/xsonorg/xson-core/](http://repo1.maven.org/maven2/com/github/xsonorg/xson-core/)
+
+2.在maven中如何配置xson依赖
 
     <dependency>
 		<groupId>com.github.xsonorg</groupId>
@@ -92,3 +98,5 @@ Xson是一个Java对象序列化和反序列化程序。支持Java对象到字�
 4.在xson中添加用户自定义的Serializer和Deserializer
 
 	XsonSupport.addCustomSupportType(XUser1.class, new CustomerSerializer(), new CustomerDeserializer());
+
+## 6. 性能测试
