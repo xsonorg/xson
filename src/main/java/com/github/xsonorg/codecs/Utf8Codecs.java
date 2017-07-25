@@ -15,11 +15,11 @@ public class Utf8Codecs {
 
 		int arrayLength = length * 3;
 		byte[] buffer = new byte[arrayLength];
-		
-//		int arrayLength = length * 3;
-//		byte[] buffer = BufferCache.getBytes(arrayLength);
-//		arrayLength = buffer.length;
-		
+
+		// int arrayLength = length * 3;
+		// byte[] buffer = BufferCache.getBytes(arrayLength);
+		// arrayLength = buffer.length;
+
 		for (int i = 0; i < length; i++) {
 			char ch = val.charAt(i);
 			if (ch < 0x80)
@@ -40,9 +40,14 @@ public class Utf8Codecs {
 		}
 		return buffer;
 	}
-	
+
 	public static String decode(byte[] buffer, int offset, int length) {
-		if (0 == length || offset == length) {
+		// if (0 == length || offset == length) {
+		// return new String();
+		// }
+
+		// fix bug
+		if (0 == length) {
 			return new String();
 		}
 		char[] chars = new char[length];
@@ -66,8 +71,7 @@ public class Utf8Codecs {
 				chars[charIndex] = (char) ((b & 0x1F) << 6 | buffer[offset++] & 0x3F);
 				break;
 			case 14:
-				chars[charIndex] = (char) ((b & 0x0F) << 12
-						| (buffer[offset++] & 0x3F) << 6 | buffer[offset++] & 0x3F);
+				chars[charIndex] = (char) ((b & 0x0F) << 12 | (buffer[offset++] & 0x3F) << 6 | buffer[offset++] & 0x3F);
 				break;
 			}
 			charIndex++;

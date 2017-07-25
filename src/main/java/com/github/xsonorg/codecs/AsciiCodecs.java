@@ -22,7 +22,11 @@ public class AsciiCodecs {
 	}
 
 	public static String decode(byte[] buffer, int offset, int length) {
-		if (0 == length || offset == length) {
+		// if (0 == length || offset == length) {
+		// return new String();
+		// }
+		// fix bug
+		if (0 == length) {
 			return new String();
 		}
 		char[] chars = new char[length];
