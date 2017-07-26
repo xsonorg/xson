@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="XSON" xmlns="http://maven.apache.org/DECORATION/1.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd">
+
+	<bannerLeft>
+		<name>Project Name</name>
+		<src>http://maven.apache.org/images/apache-maven-project-2.png</src>
+		<href>http://maven.apache.org/</href>
+	</bannerLeft>
+
+	<bannerRight>
+		<src>http://maven.apache.org/images/maven-logo-2.gif</src>
+	</bannerRight>
+
+	<version position="right" />
+	<publishDate position="right" />
+
+	<poweredBy>
+		<logo name="Maven" href="http://maven.apache.org/"
+			img="http://maven.apache.org/images/logos/maven-feather.png" />
+	</poweredBy>
+
+	<body>
+
+		<breadcrumbs>
+			<item name="index" href="###" />
+		</breadcrumbs>
+
+		<!-- 项目信息报告 inherit表示子模块继承父模块 -->
+		<menu name="OVERVIEW">
+			<item name="首页" href="index.html" />
+			<item name="使用说明" href="usage.html" />
+			<item name="数据结构" href="structure.html" />
+			<item name="技术设计" href="design.html" />
+			<item name="性能测试" href="testing.html" />
+		</menu>
+		<menu name="PROJECT DOCUMENTATION">
+			<item name="Dependencies" href="dependencies.html" />
+			<item name="Dependency Information" href="dependency-info.html" />
+		</menu>
+		<!-- <footer><![CDATA[All rights reserved.]]></footer> -->
+	</body>
+
+	<!-- 皮肤 -->
+	<skin>
+		<groupId>org.apache.maven.skins</groupId>
+		<artifactId>maven-fluido-skin</artifactId>
+		<version>1.5</version>
+	</skin>
+</project>
