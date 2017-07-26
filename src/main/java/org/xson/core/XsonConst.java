@@ -569,13 +569,24 @@ public class XsonConst {
 		}
 
 		// Support for XCO
-		// if (properties.containsKey("xco")) {
-		// Class<?> xcoClass = XsonTypeUtils.findClass("org.xson.common.object.XCO");
-		// FIELD_TYPE_MAP.put(xcoClass, ByteUtils.byteToInt(XCO));
-		// SYSTEM_TYPE_MAP.put(ByteUtils.byteToInt(XCO), xcoClass);
-		// WRITER_MAP.put(xcoClass, new XCOSerializer());
-		// SYSTEM_READER_MAP.put(ByteUtils.byteToInt(XCO), new XCODeserializer());
-		// }
+		if (properties.containsKey("xco")) {
+			// Class<?> xcoClass = XsonTypeUtils.findClass("org.xson.common.object.XCO");
+			// FIELD_TYPE_MAP.put(xcoClass, ByteUtils.byteToInt(XCO));
+			// SYSTEM_TYPE_MAP.put(ByteUtils.byteToInt(XCO), xcoClass);
+			// WRITER_MAP.put(xcoClass, new XCOSerializer());
+			// SYSTEM_READER_MAP.put(ByteUtils.byteToInt(XCO), new XCODeserializer());
+			try {
+				Class<?> xcoForXsonClass = XsonTypeUtils.findClass("org.xson.common.object.XCOForXSON");
+				Class<?> xcoClass = (Class<?>) xcoForXsonClass.getMethod("getXCOClass", new Class[0]).invoke(null, new Object[0]);
+				FIELD_TYPE_MAP.put(xcoClass, ByteUtils.byteToInt(XCO));
+				SYSTEM_TYPE_MAP.put(ByteUtils.byteToInt(XCO), xcoClass);
+				WRITER_MAP.put(xcoClass, (XsonWriter) xcoForXsonClass.getMethod("getSerializer", new Class[0]).invoke(null, new Object[0]));
+				SYSTEM_READER_MAP.put(ByteUtils.byteToInt(XCO),
+						(XsonReader) xcoForXsonClass.getMethod("getDeserializer", new Class[0]).invoke(null, new Object[0]));
+			} catch (Throwable e) {
+				throw new XsonException("init xco support error.", e);
+			}
+		}
 
 		// # User bean classname mapping configuration
 		for (Object keyO : properties.keySet()) {
@@ -604,8 +615,10 @@ public class XsonConst {
 			if (null != _capacity) {
 				capacity = Integer.parseInt(_capacity.trim());
 			}
-		} catch (Exception e) {
+		} catch (Throwable e) {
+			throw new XsonException("init xson byteArray error.", e);
 		}
 		byteArrayManager = new ByteArrayManager(number, capacity);
 	}
+
 }
