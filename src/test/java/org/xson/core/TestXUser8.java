@@ -24,8 +24,8 @@ public class TestXUser8 {
 		//prop.put("org.xson.vo.Person", "p1");
 		
 		prop.put("org.xson.core.testmodel.XUser8", "a");
-		prop.put("java.util.ArrayList", "b");
-		prop.put("org.xson.core.vo.Phone", "c");
+//		prop.put("java.util.ArrayList", "b");
+//		prop.put("org.xson.core.vo.Phone", "c");
 		 
 
 		XsonSupport.addCustomAgreementType(prop);
