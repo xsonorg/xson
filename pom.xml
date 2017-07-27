@@ -9,7 +9,7 @@
 
 	<name>xson</name>
 	<url>http://www.xson.org/</url>
-	<description>Xson is Java object serialization and serialization processor</description>
+	<description>Xson is Java object serialization and serialization processor.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
