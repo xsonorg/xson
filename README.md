@@ -60,3 +60,9 @@ Maven使用：
 ### 5. 技术文档
 
 <http://www.xson.org/project/xson/1.0.2/>
+
+### 6. 沟通交流
+
+QQ群：518522232**（请备注关注的项目）**
+
+邮箱：xson_org@126.com
