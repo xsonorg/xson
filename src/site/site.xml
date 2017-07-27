@@ -5,23 +5,23 @@
 
 	<bannerLeft>
 		<name>Project Name</name>
-		<src>http://maven.apache.org/images/apache-maven-project-2.png</src>
-		<href>http://maven.apache.org/</href>
+		<src>images/xson_4XX_90.png</src>
 	</bannerLeft>
-
-	<bannerRight>
-		<src>http://maven.apache.org/images/maven-logo-2.gif</src>
-	</bannerRight>
 
 	<version position="right" />
 	<publishDate position="right" />
 
-	<poweredBy>
-		<logo name="Maven" href="http://maven.apache.org/"
-			img="http://maven.apache.org/images/logos/maven-feather.png" />
-	</poweredBy>
-
 	<body>
+
+		<head><![CDATA[<script>
+			var _hmt = _hmt || [];
+			(function() {
+			  var hm = document.createElement("script");
+			  hm.src = "https://hm.baidu.com/hm.js?667c1c941a306c7a5b4eb4d49f740b15";
+			  var s = document.getElementsByTagName("script")[0]; 
+			  s.parentNode.insertBefore(hm, s);
+			})();
+		</script>]]></head>
 
 		<breadcrumbs>
 			<item name="index" href="###" />

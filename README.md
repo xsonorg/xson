@@ -2,7 +2,7 @@
 
 ### 1. 项目介绍
 
-![Xson](images/00.png)
+![Xson](http://www.xson.org/project/xson/1.0.2/images/00.png)
 
 Xson是一个Java对象序列化和反序列化框架。支持Java对象到字节数组的序列化，和从字节数组到Java对象的反序列化。
 
@@ -40,16 +40,14 @@ Xson是一个Java对象序列化和反序列化框架。支持Java对象到字�
 
 ### 3. 版本和引用
 
-当前版本：1.2.0
-
-源码地址：<https://github.com/xsonorg/xson>
+当前版本：1.0.2
 
 Maven使用：
 
 	<dependency>
 		<groupId>org.xson</groupId>
 		<artifactId>xson</artifactId>
-		<version>1.2.0</version>
+		<version>1.0.2</version>
 	</dependency>
 
 ### 4. 新版本特性
@@ -58,3 +56,7 @@ Maven使用：
 2. 提供带有偏移内容的API支持；
 3. 提供XCO对象序列化和反序列的支持；
 4. 提供扩展配置文件的支持；
+
+### 5. 技术文档
+
+<http://www.xson.org/project/xson/1.0.2/>

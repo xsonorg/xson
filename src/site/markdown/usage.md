@@ -7,7 +7,7 @@
 	<dependency>
 		<groupId>org.xson</groupId>
 		<artifactId>xson</artifactId>
-		<version>1.2.0</version>
+		<version>1.0.2</version>
 	</dependency>
 
 > b. 序列化
